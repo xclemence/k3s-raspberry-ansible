@@ -1,0 +1,14 @@
+---
+k3s_version: v1.17.5+k3s1
+ansible_user: pi
+ansible_python_interpreter: /usr/bin/python3
+systemd_dir: /etc/systemd/system
+master_ip: "{{ hostvars[groups['master'][0]]['ansible_host'] | default(groups['master'][0]) }}"
+extra_server_args: ""
+extra_agent_args: ""
+
+manifest_base_dir: ~/kubernetes_manifests
+kube_config_file_dir: ~{{ ansible_user }}/.kube
+kube_config_file: "{{ kube_config_file_dir }}/config"
+
+helm_path: /snap/bin/helm

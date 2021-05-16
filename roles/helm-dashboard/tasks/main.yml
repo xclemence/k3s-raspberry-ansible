@@ -1,0 +1,30 @@
+---
+
+- name: Deploy Kubernetes Dashboard
+  community.kubernetes.helm:
+    binary_path: "{{helm_path}}"
+    kubeconfig: "{{kube_config_file}}"
+    name: kubernetes-dashboard
+    chart_repo_url: https://kubernetes.github.io/dashboard/
+    chart_ref: kubernetes-dashboard
+    release_namespace: dashboard
+    create_namespace: true
+
+- name: ensure manifest dir exists
+  file:
+    path: "{{manifest_base_dir}}/dashboard"
+    state: directory
+
+- name: create manifest template for kube deploy 
+  template:
+    src: dashboard-security.yml
+    dest: "{{manifest_base_dir}}/dashboard/dashboard-security.yml"
+
+# - name: Apply security
+#   command: kubectl apply -f "{{manifest_base_dir}}/dashboard/dashboard-security.yml"
+
+- name: Apply security
+  community.kubernetes.k8s:
+    state: present
+    kubeconfig: "{{ kube_config_file }}"
+    src: "{{manifest_base_dir}}/dashboard/dashboard-security.yml"

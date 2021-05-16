@@ -1,0 +1,9 @@
+---
+
+- name: ensure kube dir exists
+  file:
+    path: "{{kube_config_file_dir}}"
+    state: directory
+
+- name: Copy kube config
+  copy: src=buffer/config dest={{ kube_config_file }}

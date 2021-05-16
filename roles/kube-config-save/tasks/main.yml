@@ -1,0 +1,6 @@
+---
+
+- name: Fetch the file from the master to ansible
+  run_once: yes
+  fetch: src={{ kube_config_file }} dest=buffer/ flat=yes
+

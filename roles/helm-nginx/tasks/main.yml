@@ -1,0 +1,13 @@
+---
+
+- name: Deploy Kubernetes nginx
+  community.kubernetes.helm:
+    binary_path: "{{helm_path}}"
+    kubeconfig: "{{kube_config_file}}"
+    name: ingress-nginx
+    chart_repo_url: https://kubernetes.github.io/ingress-nginx
+    chart_ref: ingress-nginx
+    release_namespace: ingress-nginx
+    create_namespace: true
+
+

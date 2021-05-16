@@ -1,0 +1,42 @@
+---
+
+- name: Install Dependencies
+  apt:
+    name: ['python3-setuptools', 'python3-pip']
+    state: latest
+    update_cache: yes
+
+- name: Install yaml Python lib
+  pip:
+    name: pyyaml
+
+- name: Install snap
+  apt:
+    name: snapd
+    update_cache: true
+
+- name: Install helm
+  community.general.snap:
+    name: helm
+    classic: yes
+
+
+- name: Add an Apt signing key, uses whichever key is at the URL
+  ansible.builtin.apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Add specified repository into sources list
+  ansible.builtin.apt_repository:
+    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+
+- name: Install kubectl
+  apt:
+    name: 'kubectl'
+    state: latest
+    update_cache: yes
+
+- name: install openshift module
+  pip:
+    name: openshift
