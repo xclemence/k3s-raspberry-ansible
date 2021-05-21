@@ -24,4 +24,5 @@
     - role: helm-install
     - role: kube-config-copy
     - role: helm-dashboard
-    - role: helm-nginx
+    - role: helm-longhorn
+    - role: helm-ingress-nginx

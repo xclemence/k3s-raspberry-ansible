@@ -1,0 +1,15 @@
+---
+
+- name: Clone longhorn repo
+  ansible.builtin.git:
+    repo: "https://github.com/longhorn/longhorn"
+    dest: /tmp/helm_repo
+
+- name: Deploy longhorn chart from local path
+  community.kubernetes.helm:
+    binary_path: "{{helm_path}}"
+    kubeconfig: "{{kube_config_file}}"
+    name: longhorn
+    chart_ref: /tmp/helm_repo/chart/
+    release_namespace: longhorn-system
+    create_namespace: true

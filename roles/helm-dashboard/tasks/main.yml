@@ -10,21 +10,31 @@
     release_namespace: dashboard
     create_namespace: true
 
-- name: ensure manifest dir exists
-  file:
-    path: "{{manifest_base_dir}}/dashboard"
-    state: directory
-
-- name: create manifest template for kube deploy 
-  template:
-    src: dashboard-security.yml
-    dest: "{{manifest_base_dir}}/dashboard/dashboard-security.yml"
-
-# - name: Apply security
-#   command: kubectl apply -f "{{manifest_base_dir}}/dashboard/dashboard-security.yml"
-
-- name: Apply security
+- name: Create service account
   community.kubernetes.k8s:
     state: present
     kubeconfig: "{{ kube_config_file }}"
-    src: "{{manifest_base_dir}}/dashboard/dashboard-security.yml"
+    definition: 
+      apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: dashboard
+        namespace: dashboard
+
+- name: Apply cluster role binding
+  community.kubernetes.k8s:
+    state: present
+    kubeconfig: "{{ kube_config_file }}"
+    definition: 
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRoleBinding
+      metadata:
+        name: dashboard
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: cluster-admin
+      subjects:
+      - kind: ServiceAccount
+        name: dashboard
+        namespace: dashboard

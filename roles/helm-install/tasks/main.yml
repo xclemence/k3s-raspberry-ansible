@@ -20,7 +20,6 @@
     name: helm
     classic: yes
 
-
 - name: Add an Apt signing key, uses whichever key is at the URL
   ansible.builtin.apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
@@ -40,3 +39,9 @@
 - name: install openshift module
   pip:
     name: openshift
+
+- name: Install Git
+  apt:
+    name: 'git'
+    state: latest
+    update_cache: yes

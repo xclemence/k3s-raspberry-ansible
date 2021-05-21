@@ -38,3 +38,8 @@
     path: /usr/sbin/ip6tables-legacy
     name: ip6tables
   register: ip6_legacy
+
+- name: Install iscsi
+  apt:
+    name: open-iscsi
+    update_cache: true

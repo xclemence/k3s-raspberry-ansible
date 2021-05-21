@@ -17,7 +17,7 @@
 	"extensions": [],
 
 	"containerEnv": {
-		"ANSIBLE_CONFIG": "/workspaces/k3s-ansible/ansible.cfg",
+		"ANSIBLE_CONFIG": "/workspaces/k3s-raspberry-ansible/ansible.cfg",
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
