@@ -70,8 +70,8 @@ Tools/plugins installed:
 - Ingress nginx (Helm)
 
 Ansible galaxy collections required:
-- ommunity.general
-- ommunity.kubernetes
+- community.general
+- community.kubernetes
 
 ### Install the k3s
 
